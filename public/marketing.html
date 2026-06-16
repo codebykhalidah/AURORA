@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="referrer" content="no-referrer">
+  <title>Aurora Maritime | Luxury Small Ship Cruises</title>
+  <meta name="description" content="Experience unparalleled luxury aboard Aurora, an intimate cruise ship accommodating only 50 guests. Explore exclusive destinations in ultimate comfort.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Aurora Maritime | Luxury Small Ship Cruises">
+  <meta property="og:description" content="An intimate boutique cruise experience for 50 guests across the world's most exclusive destinations.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1621277224630-81a0a4e3f760?auto=format&fit=crop&w=1200&q=90">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="/marketing.html">
+  <link rel="icon" href="favicon/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1621277224630-81a0a4e3f760?auto=format&fit=crop&w=2400&q=90">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:wght@300;400&family=Space+Mono:wght@400&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js"></script>
+  <script src="https://assets.codepen.io/16327/ScrollSmoother.min.js"></script>
+  <script src="https://assets.codepen.io/16327/SplitText3.min.js"></script>
+  <script src="https://assets.codepen.io/16327/DrawSVGPlugin3.min.js"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css">
+  <script src="https://unpkg.com/splitting/dist/splitting.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['Playfair Display', 'serif'],
+            body: ['Inter', 'sans-serif'],
+            mono: ['Space Mono', 'monospace']
+          },
+          colors: {
+            aurora: {
+              black: '#0a0a0a',
+              panel: '#111111',
+              dark: '#1a1a1a',
+              medium: '#2a2a2a',
+              muted: '#888888',
+              gold: '#c9a96e',
+              goldLight: '#d4af37',
+              goldDark: '#b8941f',
+              ocean: '#1e3a5f',
+              oceanLight: '#2e5a8f'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "TravelAgency",
+    "name": "Aurora Maritime",
+    "description": "Luxury small ship cruises for up to 50 guests.",
+    "url": "demo-aurora-maritime.html",
+    "telephone": "+37712345678",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "123 Maritime Boulevard",
+      "addressLocality": "Monaco"
+    }
+  }
+  </script>
+  <style>
+    :root {
+      --black: #0a0a0a;
+      --panel: #111111;
+      --dark: #1a1a1a;
+      --medium: #2a2a2a;
+      --muted: rgba(255,255,255,0.6);
+      --gold: #c9a96e;
+      --gold-light: #d4af37;
+      --gold-dark: #b8941f;
+      --ocean: #1e3a5f;
+      --ocean-light: #2e5a8f;
+      --border-subtle: rgba(255,255,255,0.08);
+      --border-medium: rgba(255,255,255,0.15);
+      --hover-overlay: rgba(201,169,110,0.1);
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    html { background: var(--black); scroll-behavior: auto; }
+    body { margin: 0; background: var(--black); color: #fff; font-family: 'Inter', sans-serif; font-weight: 400; line-height: 1.6; overflow-x: hidden; }
+    .container-xl { max-width: 1600px; margin: 0 auto; padding: 0 60px; }
+    .font-display { letter-spacing: -0.02em; }
+    .interactive { cursor: pointer; }
+    #preloader { position: fixed; inset: 0; z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; background: var(--black); }
+    #preloader.is-hidden { pointer-events: none; }
+    .preloader-line { width: 150px; height: 1px; margin: 1.5rem 0 1rem; background: rgba(255,255,255,0.1); overflow: hidden; }
+    .preloader-fill { width: 0%; height: 100%; background: linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 100%); }
+    .cursor-dot, .cursor-ring { position: fixed; left: 0; top: 0; pointer-events: none; z-index: 10000; border-radius: 50%; mix-blend-mode: difference; display: grid; place-items: center; }
+    .cursor-dot { width: 6px; height: 6px; background: #fff; transform: translate(-50%, -50%); }
+    .cursor-ring { width: 40px; height: 40px; background: transparent; border: 1px solid rgba(255,255,255,0.5); transform: translate(-50%, -50%); transition: width 0.3s var(--ease), height 0.3s var(--ease), background 0.3s var(--ease), border 0.3s var(--ease), transform 0.15s var(--ease); color: #fff; font: 500 10px/1 'Inter', sans-serif; letter-spacing: 0.15em; }
+    .cursor-ring.is-hover { width: 60px; height: 60px; border-color: var(--gold); }
+    .cursor-ring.is-button { width: 80px; height: 80px; border-color: var(--gold); background: rgba(201,169,110,0.1); }
+    .cursor-ring.is-image { width: 100px; height: 100px; border-color: rgba(255,255,255,0.7); background: rgba(10,10,10,0.22); mix-blend-mode: normal; }
+    .cursor-ring.is-down { transform: translate(-50%, -50%) scale(0.85); }
+    .cursor-ring.is-drag { transform: translate(-50%, -50%) scale(1.2); border-color: var(--gold); animation: cursor-spin 1.2s linear infinite; }
+    @keyframes cursor-spin { to { rotate: 360deg; } }
+    #page-transition { position: fixed; inset: 0; z-index: 9998; background: var(--black); transform: translateY(100%); pointer-events: none; }
+    #site-nav { position: fixed; inset: 0 0 auto 0; height: 100px; z-index: 100; transition: all 0.4s var(--ease); }
+    #site-nav.scrolled { height: 80px; background: rgba(10,10,10,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .nav-item { position: relative; padding: 0.5rem 0; color: rgba(255,255,255,0.6); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.3s; }
+    .nav-item::after { content: ""; position: absolute; left: 50%; bottom: 0; width: 0; height: 1px; background: var(--gold); transform: translateX(-50%); transition: width 0.4s var(--ease); }
+    .nav-item:hover { color: #fff; }
+    .nav-item:hover::after { width: 100%; }
+    .nav-cta, .btn-outline, .btn-primary { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; transition: all 0.4s var(--ease); }
+    .nav-cta { padding: 1rem 2rem; border: 1px solid rgba(255,255,255,0.2); color: #fff; }
+    .nav-cta:hover { background: #fff; color: var(--black); border-color: #fff; transform: translateY(-2px); }
+    .btn-primary { padding: 1.25rem 3rem; background: #fff; color: var(--black); display: inline-flex; align-items: center; justify-content: center; }
+    .btn-primary:hover { background: var(--gold); color: #fff; transform: translateY(-3px); }
+    .btn-outline { padding: 1.25rem 2.5rem; border: 1px solid rgba(255,255,255,0.2); color: #fff; display: inline-flex; align-items: center; gap: 0.75rem; }
+    .btn-outline:hover { border-color: #fff; transform: translateY(-3px); }
+    .hamburger span { display: block; width: 24px; height: 1px; background: #fff; margin: 6px 0; transition: transform 0.35s var(--ease), opacity 0.35s; }
+    .hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.is-open span:nth-child(2) { opacity: 0; }
+    .hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    #mobile-menu { position: fixed; inset: 0; z-index: 200; display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(10,10,10,0.98); backdrop-filter: blur(20px); opacity: 0; pointer-events: none; transition: opacity 0.4s ease; }
+    #mobile-menu.open { opacity: 1; pointer-events: auto; }
+    #hero-webgl { position: absolute; inset: 0; z-index: 1; }
+    .hero-bg { position: absolute; inset: 0; z-index: 0; background: linear-gradient(90deg, rgba(10,10,10,0.86), rgba(10,10,10,0.42)), url("https://images.unsplash.com/photo-1621277224630-81a0a4e3f760?auto=format&fit=crop&w=2400&q=90") center/cover; opacity: 0.65; will-change: transform, opacity; }
+    .hero-ray { position: absolute; inset: -20% auto auto 8%; z-index: 2; width: 42vw; height: 120vh; background: linear-gradient(90deg, rgba(201,169,110,0.16), transparent); filter: blur(24px); transform: rotate(18deg); opacity: 0.45; pointer-events: none; will-change: transform; }
+    .hero-content { position: relative; z-index: 10; height: 100%; display: flex; flex-direction: column; justify-content: center; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.75rem; width: fit-content; margin-bottom: 3rem; padding: 0.75rem 1.5rem; border: 1px solid rgba(201,169,110,0.3); background: rgba(201,169,110,0.05); border-radius: 100px; color: var(--gold); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; }
+    .scroll-line { width: 1px; height: 60px; background: linear-gradient(180deg, rgba(255,255,255,0.6) 0%, transparent 100%); animation: scroll-line 2s ease-in-out infinite; }
+    @keyframes scroll-line { 0%,100% { transform: scaleY(1); opacity: 1; } 50% { transform: scaleY(0.5); opacity: 0.5; } }
+    .section-pad { padding: 180px 0; }
+    .section-label { margin-bottom: 1.5rem; color: var(--gold); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; }
+    .section-title { max-width: 600px; color: #fff; font-family: 'Playfair Display', serif; font-size: 4rem; font-weight: 300; line-height: 1.1; }
+    .section-description { max-width: 500px; color: rgba(255,255,255,0.5); font-size: 1.125rem; line-height: 1.8; }
+    .lux-img { width: 100%; object-fit: cover; border-radius: 2px; box-shadow: 0 40px 80px rgba(0,0,0,0.4); transform-style: preserve-3d; will-change: transform, clip-path; }
+    .suite-card, .experience-card { border: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02); transition: all 0.4s var(--ease); }
+    .suite-card:hover { transform: translateY(-10px); border-color: rgba(201,169,110,0.3); background: rgba(255,255,255,0.05); }
+    .experience-card { min-width: 400px; background: rgba(10,10,10,0.8); backdrop-filter: blur(20px); border-color: rgba(255,255,255,0.1); }
+    .experience-card:hover { transform: scale(1.02); border-color: var(--gold); }
+    .horizontal-scroll { scrollbar-width: none; }
+    .horizontal-scroll::-webkit-scrollbar { display: none; }
+    @media (min-width: 768px) {
+      .experiences-scroll { min-height: 100vh; overflow: visible !important; }
+      .experiences-pin { position: sticky; top: 0; height: 100vh; overflow: hidden; padding: 0; }
+      .experiences-stage { overflow: hidden; min-height: 100vh !important; }
+      .experiences-container { overflow: visible !important; width: max-content; transform: translate3d(0,0,0); will-change: transform; }
+      .experiences-container { gap: 1.5rem !important; }
+      .experience-row { gap: 1.5rem !important; }
+      .experiences-scroll .experience-card { flex: 0 0 calc((min(100vw, 1600px) - 120px - 3rem) / 3); min-width: 0; padding: 1rem !important; }
+      .experiences-scroll .experience-card img { height: clamp(135px, 20vh, 190px); object-fit: contain; background: rgba(255,255,255,0.035); margin-bottom: 1rem !important; }
+      .experiences-scroll .experience-card h3 { font-size: clamp(1.25rem, 2vw, 1.75rem) !important; line-height: 1.12; margin-bottom: 0.55rem !important; }
+      .experiences-scroll .experience-card p { font-size: clamp(0.78rem, 1vw, 0.9rem); line-height: 1.5; }
+    }
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .experiences-scroll .experience-card { flex-basis: calc((100vw - 80px - 3rem) / 3); }
+    }
+    .dest-card img, .journal-article img { transition: transform 1.2s var(--ease), filter 1.2s var(--ease); }
+    .dest-card:hover img { transform: scale(1.15); }
+    .dest-card .dest-overlay { transition: opacity 0.6s var(--ease), backdrop-filter 0.6s var(--ease); opacity: 0.72; }
+    .dest-card:hover .dest-overlay { opacity: 0.88; backdrop-filter: blur(2px); }
+    .journal-article:hover img { transform: scale(1.05); }
+    .journal-article:hover h3 { color: var(--gold); }
+    .reveal { opacity: 0; transform: translateY(40px); }
+    .reveal-img { opacity: 0; transform: scale(1.05); }
+    .reveal-image { clip-path: inset(100% 0 0 0); transform: scale(1.2); }
+    .marquee { overflow: hidden; white-space: nowrap; border-block: 1px solid rgba(255,255,255,0.04); background: #0a0a0a; }
+    .marquee-content { display: inline-block; min-width: 200%; animation: marquee 30s linear infinite; color: rgba(255,255,255,0.1); font: 300 3rem/1 'Playfair Display', serif; letter-spacing: 0.08em; padding: 2.5rem 0; }
+    @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .scroll-progress { position: fixed; right: 40px; top: 50%; z-index: 120; width: 2px; height: 200px; transform: translateY(-50%); background: rgba(255,255,255,0.1); }
+    .scroll-progress-fill { width: 100%; height: 0%; background: var(--gold); }
+    .word, .char { display: inline-block; }
+    [data-splitting] .word { overflow: hidden; vertical-align: top; }
+    .skip-link { position: fixed; left: 1rem; top: 1rem; z-index: 10001; transform: translateY(-160%); background: var(--gold); color: var(--black); padding: 0.75rem 1rem; border-radius: 999px; font-weight: 500; }
+    .skip-link:focus { transform: translateY(0); }
+    :where(a, button):focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+    @media (max-width: 1023px) {
+      .container-xl { padding: 0 40px; }
+      .section-title { font-size: 3rem; }
+      .desktop-nav, .desktop-cta { display: none; }
+    }
+    @media (max-width: 767px) {
+      .container-xl { padding: 0 24px; }
+      .section-pad { padding: 100px 0; }
+      .hero-title { font-size: 3.5rem !important; }
+      .section-title { font-size: 2.5rem; }
+      .subsection-title { font-size: 1.75rem !important; }
+      .mobile-stack { grid-template-columns: 1fr !important; text-align: center; gap: 3rem !important; }
+      .hero-actions, .cta-actions { flex-direction: column; align-items: stretch; }
+      .hero-actions a, .cta-actions button { width: 100%; justify-content: center; text-align: center; }
+      .experience-card { min-width: 82vw; }
+      .footer-grid { grid-template-columns: 1fr !important; gap: 3rem !important; }
+      .footer-bottom { flex-direction: column; gap: 1.5rem; text-align: center; }
+    }
+    @media (pointer: coarse), (prefers-reduced-motion: reduce) {
+      .cursor-dot, .cursor-ring { display: none; }
+      .reveal, .reveal-img { opacity: 1; transform: none; }
+      .scroll-line { animation: none; }
+    }
+    .booking-modal { position: fixed; inset: 0; z-index: 10050; display: flex; align-items: center; justify-content: center; padding: 1.5rem; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 0.35s var(--ease), visibility 0.35s var(--ease); }
+    .booking-modal.is-open { opacity: 1; visibility: visible; pointer-events: auto; }
+    .booking-modal-backdrop { position: absolute; inset: 0; background: rgba(10,10,10,0.88); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+    .booking-modal-panel { position: relative; z-index: 1; display: flex; flex-direction: column; width: min(960px, 100%); max-height: min(92vh, 920px); border: 1px solid rgba(201,169,110,0.25); background: var(--panel); box-shadow: 0 40px 120px rgba(0,0,0,0.55); transform: translateY(24px) scale(0.98); transition: transform 0.4s var(--ease); }
+    .booking-modal.is-open .booking-modal-panel { transform: translateY(0) scale(1); }
+    .booking-modal-header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.25rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .booking-modal-close { width: 44px; height: 44px; border: 1px solid rgba(255,255,255,0.15); background: transparent; color: #fff; font-size: 1.5rem; line-height: 1; transition: border-color 0.3s, color 0.3s, background 0.3s; }
+    .booking-modal-close:hover { border-color: var(--gold); color: var(--gold); background: rgba(201,169,110,0.08); }
+    .booking-modal-body { position: relative; flex: 1; min-height: min(72vh, 760px); background: var(--black); overflow: hidden; }
+    .booking-modal-body iframe { display: block; width: 100%; height: 100%; min-height: min(72vh, 760px); border: 0; background: var(--black); }
+    .booking-modal-status { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; padding: 2rem; text-align: center; color: rgba(255,255,255,0.72); background: var(--black); }
+    .booking-modal-status[hidden] { display: none; }
+    .booking-modal-status code { padding: 0.2rem 0.45rem; border-radius: 4px; background: rgba(255,255,255,0.08); color: var(--gold); font-family: 'Space Mono', monospace; font-size: 0.85em; }
+    @media (max-width: 767px) {
+      .booking-modal { padding: 0; align-items: stretch; }
+      .booking-modal-panel { width: 100%; max-height: 100vh; height: 100vh; border: 0; }
+      .booking-modal-body, .booking-modal-body iframe { min-height: calc(100vh - 74px); }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div id="page-transition" aria-hidden="true"></div>
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"><span class="cursor-label"></span></div>
+  <div class="scroll-progress" aria-hidden="true"><div class="scroll-progress-fill"></div></div>
+
+  <div id="preloader" aria-live="polite">
+    <div class="font-display text-5xl font-light text-white">AURORA</div>
+    <div class="mt-2 font-body text-xs uppercase tracking-[0.3em] text-white/40">MARITIME</div>
+    <div class="preloader-line"><div class="preloader-fill"></div></div>
+    <div id="preloader-count" class="font-mono text-xs text-white/50">0%</div>
+  </div>
+
+  <header id="site-nav">
+    <div class="container-xl flex h-full items-center justify-between">
+      <a href="#hero" class="interactive font-display text-[1.75rem] font-light tracking-[0.1em] text-white transition hover:text-aurora-gold">AURORA</a>
+      <nav class="desktop-nav hidden items-center gap-16 lg:flex" aria-label="Primary">
+        <a class="nav-item interactive" href="#ship">The Ship</a>
+        <a class="nav-item interactive" href="#suites">Suites</a>
+        <a class="nav-item interactive" href="#experiences">Experiences</a>
+        <a class="nav-item interactive" href="#destinations">Destinations</a>
+        <a class="nav-item interactive" href="#journal">Journal</a>
+        <a class="nav-item interactive" href="#contact">Contact</a>
+      </nav>
+      <a href="/" data-booking-link class="desktop-cta nav-cta interactive hidden lg:inline-flex">Reserve Voyage</a>
+      <button id="menu-toggle" class="hamburger interactive lg:hidden" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <div id="mobile-menu" role="dialog" aria-modal="true" aria-hidden="true">
+    <a class="interactive mobile-link font-display text-5xl font-light text-white hover:text-aurora-gold" href="#ship">The Ship</a>
+    <a class="interactive mobile-link font-display text-5xl font-light text-white hover:text-aurora-gold" href="#suites">Suites</a>
+    <a class="interactive mobile-link font-display text-5xl font-light text-white hover:text-aurora-gold" href="#experiences">Experiences</a>
+    <a class="interactive mobile-link font-display text-5xl font-light text-white hover:text-aurora-gold" href="#destinations">Destinations</a>
+    <a class="interactive mobile-link font-display text-5xl font-light text-white hover:text-aurora-gold" href="#journal">Journal</a>
+    <a class="interactive mobile-link font-display text-5xl font-light text-white hover:text-aurora-gold" href="/" data-booking-link>Reserve Voyage</a>
+    <a class="interactive mobile-link font-display text-5xl font-light text-white hover:text-aurora-gold" href="#contact">Contact</a>
+  </div>
+
+  <main id="main">
+    <section id="hero" class="relative h-screen overflow-hidden bg-aurora-black">
+      <div class="hero-bg hero-depth-1" aria-hidden="true"></div>
+      <div class="hero-ray hero-depth-2" aria-hidden="true"></div>
+      <div id="hero-webgl" aria-hidden="true"></div>
+      <div class="hero-content hero-depth-3 container-xl">
+        <div class="hero-badge hero-anim"><span class="h-1.5 w-1.5 rounded-full bg-aurora-gold"></span>Now booking 2025-2026 voyages</div>
+        <h1 class="hero-title hero-headline hero-anim font-display text-[7rem] font-light leading-none tracking-[0.05em] text-white" data-splitting>AURORA</h1>
+        <div class="hero-title hero-subheadline hero-anim mb-12 font-display text-[7rem] font-light leading-none tracking-[0.15em] text-white/40" data-splitting>MARITIME</div>
+        <p class="hero-anim mb-16 max-w-[600px] text-lg leading-[1.8] text-white/60">An intimate luxury cruise experience for discerning travelers. Accommodating only 50 guests across 25 suites, Aurora offers unparalleled access to the world's most exclusive destinations.</p>
+        <div class="hero-actions hero-anim flex items-center gap-6">
+          <a class="btn-primary interactive magnetic-btn" href="#destinations"><span>Explore Voyages</span></a>
+          <button class="btn-outline interactive magnetic-btn" type="button" id="film-btn"><span class="inline-flex items-center gap-3"><i data-lucide="play" class="h-4 w-4 text-aurora-gold"></i>Watch Film</span></button>
+        </div>
+      </div>
+      <div class="absolute bottom-[60px] left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-4">
+        <div class="scroll-text text-xs uppercase tracking-[0.2em] text-white/40">Scroll</div>
+        <div class="scroll-line"></div>
+      </div>
+    </section>
+
+    <section id="ship" class="ship-section section-pad relative overflow-hidden bg-aurora-black">
+      <div class="container-xl">
+        <div class="mb-32 flex flex-col justify-between gap-10 md:flex-row md:items-start">
+          <div class="reveal">
+            <p class="section-label">The Ship</p>
+            <h2 class="section-title split-title" data-splitting>A private yacht with the soul of a grand voyage.</h2>
+          </div>
+          <p class="section-description reveal">Aurora is engineered for rare access: shallow-draft approach, silent electric harbor maneuvering, and a hospitality ratio that feels closer to a private residence than a cruise ship.</p>
+        </div>
+        <div class="mobile-stack grid grid-cols-2 items-center gap-32">
+          <div class="relative">
+            <img class="ship-main-image image-hover tilt-image lux-img reveal-img reveal-image parallax-img aspect-[4/5]" src="https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?auto=format&fit=crop&w=1600&q=90" alt="Aurora small cruise ship exterior" loading="lazy" width="1600" height="2000">
+            <img class="ship-secondary-image image-hover tilt-image absolute -bottom-16 -right-16 z-10 hidden w-[300px] aspect-[4/3] border-8 border-aurora-black object-cover shadow-2xl md:block reveal-img reveal-image" src="https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?auto=format&fit=crop&w=1200&q=90" alt="Private cruise deck lounge" loading="lazy" width="1200" height="900">
+          </div>
+          <div class="pl-0 md:pl-8">
+            <div class="mb-16 reveal">
+              <h3 class="subsection-title mb-6 font-display text-[2rem] font-light">Designed for silence</h3>
+              <p class="text-white/60 leading-[1.8]">Hybrid propulsion and acoustic insulation keep the ship nearly silent at anchor, so mornings sound like water, wind, and nothing else.</p>
+            </div>
+            <div class="mb-16 reveal">
+              <h3 class="subsection-title mb-6 font-display text-[2rem] font-light">Fifty guests maximum</h3>
+              <p class="text-white/60 leading-[1.8]">Every voyage is capped at 50 guests and served by 45 crew, enabling a level of recognition and discretion rarely possible at sea.</p>
+            </div>
+            <div class="grid grid-cols-2 gap-8 border-t border-white/10 pt-12 reveal">
+              <div><span class="block text-xs uppercase tracking-[0.15em] text-white/40">Length</span><strong class="font-mono text-xl font-normal">95 meters</strong></div>
+              <div><span class="block text-xs uppercase tracking-[0.15em] text-white/40">Guest Capacity</span><strong class="font-mono text-xl font-normal">50</strong></div>
+              <div><span class="block text-xs uppercase tracking-[0.15em] text-white/40">Crew</span><strong class="font-mono text-xl font-normal">45</strong></div>
+              <div><span class="block text-xs uppercase tracking-[0.15em] text-white/40">Suites</span><strong class="font-mono text-xl font-normal">25</strong></div>
+              <div><span class="block text-xs uppercase tracking-[0.15em] text-white/40">Speed</span><strong class="font-mono text-xl font-normal">18 knots</strong></div>
+              <div><span class="block text-xs uppercase tracking-[0.15em] text-white/40">Year Built</span><strong class="font-mono text-xl font-normal">2024</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="marquee" aria-hidden="true"><div class="marquee-content">LUXURY • EXCLUSIVITY • ELEGANCE • AURORA MARITIME • LUXURY • EXCLUSIVITY • ELEGANCE • AURORA MARITIME •</div></section>
+
+    <section id="suites" class="section-pad bg-aurora-panel">
+      <div class="container-xl">
+        <div class="mobile-stack grid grid-cols-2 items-center gap-32">
+          <div class="reveal">
+            <p class="section-label">Suites</p>
+            <h2 class="section-title split-title mb-8" data-splitting>Residential calm, framed by open water.</h2>
+            <p class="section-description">Each suite is tuned for privacy, proportion, and tactile warmth: hand-oiled timber, linen walls, stone baths, and floor-to-ceiling ocean views.</p>
+          </div>
+          <div class="relative">
+            <img class="image-hover tilt-image lux-img reveal-img reveal-image aspect-[4/5]" src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1400&q=90" alt="Aurora luxury suite with ocean view" loading="lazy" width="1400" height="1750">
+            <img class="image-hover tilt-image absolute -right-10 top-10 hidden w-52 border-8 border-aurora-panel shadow-2xl md:block reveal-img reveal-image" src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=90" alt="Suite terrace bath detail" loading="lazy" width="1200" height="900">
+          </div>
+        </div>
+        <div class="mt-24 grid gap-8 md:grid-cols-3">
+          <article class="suite-card interactive p-8 md:p-12 reveal"><h3 class="mb-3 font-display text-[1.75rem] font-light">Aurora Suite</h3><p class="mb-6 text-sm text-white/50">450 sq ft</p><p class="mb-8 text-[0.9375rem] leading-[1.7] text-white/60">Private terrace, dining salon, stone bath, and dedicated voyage host.</p><p class="font-mono text-lg text-aurora-gold">From $3,500/night</p></article>
+          <article class="suite-card interactive p-8 md:p-12 reveal"><h3 class="mb-3 font-display text-[1.75rem] font-light">Ocean View Suite</h3><p class="mb-6 text-sm text-white/50">380 sq ft</p><p class="mb-8 text-[0.9375rem] leading-[1.7] text-white/60">Panoramic glazing, separate lounge, and handcrafted minibar program.</p><p class="font-mono text-lg text-aurora-gold">From $2,800/night</p></article>
+          <article class="suite-card interactive p-8 md:p-12 reveal"><h3 class="mb-3 font-display text-[1.75rem] font-light">Deluxe Suite</h3><p class="mb-6 text-sm text-white/50">320 sq ft</p><p class="mb-8 text-[0.9375rem] leading-[1.7] text-white/60">Serene proportions, spa bath, and a window seat above the waterline.</p><p class="font-mono text-lg text-aurora-gold">From $2,200/night</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="experiences" class="experiences-scroll relative min-h-screen overflow-hidden py-24 md:py-0">
+      <div class="experiences-pin relative">
+        <img class="absolute inset-0 h-full w-full object-cover brightness-[0.4]" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=90" alt="Michelin-style dining experience at sea" loading="lazy" width="1200" height="800">
+        <div class="experiences-stage container-xl relative z-10 flex min-h-screen flex-col justify-center">
+          <div class="reveal">
+            <p class="section-label">Experiences</p>
+            <h2 class="section-title split-title" data-splitting>Days built around access, not itinerary.</h2>
+          </div>
+          <div class="experiences-container horizontal-scroll mt-6 flex flex-col gap-5 overflow-x-auto pb-4">
+            <div class="experience-row flex gap-8">
+              <article class="experience-card interactive image-hover p-12"><img class="mb-8 aspect-video w-full object-cover" src="https://images.unsplash.com/photo-1583531352515-8884af319dc1?auto=format&fit=crop&w=1200&q=90" alt="Private island lagoon" loading="lazy"><h3 class="mb-4 font-display text-3xl font-light">Private Island Excursions</h3><p class="text-white/60">Tender ashore before anyone else arrives.</p></article>
+              <article class="experience-card interactive image-hover p-12"><img class="mb-8 aspect-video w-full object-cover" src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=90" alt="Fine dining course" loading="lazy"><h3 class="mb-4 font-display text-3xl font-light">Michelin-Star Dining</h3><p class="text-white/60">Menus built nightly around the port and season.</p></article>
+              <article class="experience-card interactive image-hover p-12"><img class="mb-8 aspect-video w-full object-cover" src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1200&q=90" alt="Underwater exploration" loading="lazy"><h3 class="mb-4 font-display text-3xl font-light">Underwater Exploration</h3><p class="text-white/60">Dive guides, submersible surveys, and reef science.</p></article>
+              <article class="experience-card interactive image-hover p-12"><img class="mb-8 aspect-video w-full object-cover" src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=1200&q=90" alt="Cultural evening entertainment" loading="lazy"><h3 class="mb-4 font-display text-3xl font-light">Cultural Immersion</h3><p class="text-white/60">Private guides, closed-door ateliers, and after-hours museums.</p></article>
+              <article class="experience-card interactive image-hover p-12"><img class="mb-8 aspect-video w-full object-cover" src="https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&w=1200&q=90" alt="Spa wellness treatment" loading="lazy"><h3 class="mb-4 font-display text-3xl font-light">Wellness & Spa</h3><p class="text-white/60">Thermal rituals and movement classes at sunrise.</p></article>
+            </div>
+            <div class="experience-row flex gap-8">
+              <article class="experience-card interactive image-hover p-12"><img class="mb-8 aspect-video w-full object-cover" src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=90" alt="Private suite service" loading="lazy"><h3 class="mb-4 font-display text-3xl font-light">Suite Service</h3><p class="text-white/60">A dedicated host anticipates the rhythm of each guest.</p></article>
+              <article class="experience-card interactive image-hover p-12"><img class="mb-8 aspect-video w-full object-cover" src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=90" alt="Thermal spa suite" loading="lazy"><h3 class="mb-4 font-display text-3xl font-light">Thermal Rituals</h3><p class="text-white/60">Stone, steam, and saltwater recovery between anchorages.</p></article>
+              <article class="experience-card interactive image-hover p-12"><img class="mb-8 aspect-video w-full object-cover" src="https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1200&q=90" alt="Mediterranean port at dusk" loading="lazy"><h3 class="mb-4 font-display text-3xl font-light">After-Hours Ports</h3><p class="text-white/60">Private arrivals when the harbor has gone quiet.</p></article>
+              <article class="experience-card interactive image-hover p-12"><img class="mb-8 aspect-video w-full object-cover" src="https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1200&q=90" alt="Southeast Asia coastline" loading="lazy"><h3 class="mb-4 font-display text-3xl font-light">Remote Anchorages</h3><p class="text-white/60">Routes planned around weather, privacy, and beauty.</p></article>
+              <article class="experience-card interactive image-hover p-12"><img class="mb-8 aspect-video w-full object-cover" src="https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?auto=format&fit=crop&w=1200&q=90" alt="South Pacific lagoon" loading="lazy"><h3 class="mb-4 font-display text-3xl font-light">Lagoon Mornings</h3><p class="text-white/60">Wake to tenders, paddleboards, and warm blue water.</p></article>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="destinations" class="section-pad bg-aurora-black">
+      <div class="container-xl">
+        <div class="mb-20 reveal"><p class="section-label">Destinations</p><h2 class="section-title split-title" data-splitting>Six seasons. One private way to arrive.</h2></div>
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          <article class="dest-card image-hover interactive relative aspect-[3/4] overflow-hidden"><img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1533105079780-92b9be482077?auto=format&fit=crop&w=1000&q=90" alt="Mediterranean Coast Santorini" loading="lazy"><div class="dest-overlay absolute inset-0 flex flex-col justify-end bg-gradient-to-b from-transparent to-black/90 p-10"><h3 class="font-display text-3xl font-light">Mediterranean Coast</h3><p class="text-sm text-white/60">12 nights · Monaco to Santorini</p></div></article>
+          <article class="dest-card image-hover interactive relative aspect-[3/4] overflow-hidden"><img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38?auto=format&fit=crop&w=1000&q=90" alt="Norwegian Fjords" loading="lazy"><div class="dest-overlay absolute inset-0 flex flex-col justify-end bg-gradient-to-b from-transparent to-black/90 p-10"><h3 class="font-display text-3xl font-light">Norwegian Fjords</h3><p class="text-sm text-white/60">10 nights · Bergen to Tromso</p></div></article>
+          <article class="dest-card image-hover interactive relative aspect-[3/4] overflow-hidden"><img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1583531352515-8884af319dc1?auto=format&fit=crop&w=1000&q=90" alt="Caribbean Islands" loading="lazy"><div class="dest-overlay absolute inset-0 flex flex-col justify-end bg-gradient-to-b from-transparent to-black/90 p-10"><h3 class="font-display text-3xl font-light">Caribbean Islands</h3><p class="text-sm text-white/60">9 nights · St. Barths loop</p></div></article>
+          <article class="dest-card image-hover interactive relative aspect-[3/4] overflow-hidden"><img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1528181304800-259b08848526?auto=format&fit=crop&w=1000&q=90" alt="Southeast Asia islands" loading="lazy"><div class="dest-overlay absolute inset-0 flex flex-col justify-end bg-gradient-to-b from-transparent to-black/90 p-10"><h3 class="font-display text-3xl font-light">Southeast Asia</h3><p class="text-sm text-white/60">14 nights · Phuket to Komodo</p></div></article>
+          <article class="dest-card image-hover interactive relative aspect-[3/4] overflow-hidden"><img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1559128010-7c1ad6e1b6a5?auto=format&fit=crop&w=1000&q=90" alt="South Pacific lagoon" loading="lazy"><div class="dest-overlay absolute inset-0 flex flex-col justify-end bg-gradient-to-b from-transparent to-black/90 p-10"><h3 class="font-display text-3xl font-light">South Pacific</h3><p class="text-sm text-white/60">15 nights · Tahiti to Fiji</p></div></article>
+          <article class="dest-card image-hover interactive relative aspect-[3/4] overflow-hidden"><img class="h-full w-full object-cover" src="https://images.unsplash.com/photo-1552353617-3bfd679b3bdd?auto=format&fit=crop&w=1000&q=90" alt="Antarctica expedition ice" loading="lazy"><div class="dest-overlay absolute inset-0 flex flex-col justify-end bg-gradient-to-b from-transparent to-black/90 p-10"><h3 class="font-display text-3xl font-light">Antarctica</h3><p class="text-sm text-white/60">18 nights · Ushuaia return</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="marquee" aria-hidden="true"><div class="marquee-content">LUXURY • EXCLUSIVITY • ELEGANCE • AURORA MARITIME • LUXURY • EXCLUSIVITY • ELEGANCE • AURORA MARITIME •</div></section>
+
+    <section id="journal" class="section-pad bg-aurora-panel">
+      <div class="container-xl">
+        <div class="mb-20 reveal"><p class="section-label">Journal</p><h2 class="section-title split-title" data-splitting>Stories from the edge of the map.</h2></div>
+        <div class="grid gap-16 md:grid-cols-2">
+          <article class="journal-article image-hover interactive reveal"><div class="overflow-hidden"><img class="reveal-image aspect-[16/10] w-full object-cover" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=90" alt="Luxury ocean wake at sunset" loading="lazy"></div><p class="mt-8 text-xs uppercase tracking-[0.15em] text-aurora-gold">Design</p><h3 class="mt-4 font-display text-[2.5rem] font-light leading-tight transition-colors">Why small ships are the new private aviation.</h3><p class="mt-4 text-white/50 leading-[1.7]">A new generation of travelers wants range, privacy, and precision without sacrificing intimacy.</p><div class="mt-6 flex gap-8 text-sm text-white/40"><span>06 Jun 2026</span><span>5 min read</span></div></article>
+          <article class="journal-article image-hover interactive reveal"><div class="overflow-hidden"><img class="reveal-image aspect-[16/10] w-full object-cover" src="https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=1200&q=90" alt="Refined coastline from the water" loading="lazy"></div><p class="mt-8 text-xs uppercase tracking-[0.15em] text-aurora-gold">Voyages</p><h3 class="mt-4 font-display text-[2.5rem] font-light leading-tight transition-colors">The midnight sun itinerary, redesigned.</h3><p class="mt-4 text-white/50 leading-[1.7]">Aurora's fjord season pairs glacier landings with long-table dinners beneath a sky that never closes.</p><div class="mt-6 flex gap-8 text-sm text-white/40"><span>21 May 2026</span><span>7 min read</span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section-pad bg-gradient-to-b from-aurora-black to-aurora-panel text-center">
+      <div class="container-xl">
+        <div class="mx-auto max-w-3xl reveal">
+          <p class="section-label">Contact</p>
+          <h2 class="split-title mb-8 font-display text-5xl font-light leading-[1.1] md:text-[5rem]" data-splitting>Begin your private voyage.</h2>
+          <p class="mx-auto mb-16 max-w-2xl text-xl leading-[1.7] text-white/60">Speak with our voyage designers to select a season, suite, and route built around the way you travel.</p>
+          <div class="cta-actions flex justify-center gap-6"><a class="btn-primary interactive magnetic-btn" id="journey-btn" data-booking-link href="#"><span>Begin Your Journey</span></a><button class="btn-outline interactive magnetic-btn" type="button" id="brochure-btn"><span>Download Brochure</span></button></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="border-t border-white/5 bg-aurora-black py-16 md:py-[120px]">
+    <div class="container-xl">
+      <div class="footer-grid mb-24 grid gap-16 lg:grid-cols-[2fr_1fr_1fr_1fr_1.5fr]">
+        <div><div class="font-display text-3xl font-light">AURORA</div><p class="mt-6 text-sm text-white/40">Maritime Excellence</p><div class="mt-8 flex gap-6 text-white/40"><a aria-label="Instagram" href="#"><i data-lucide="instagram"></i></a><a aria-label="Facebook" href="#"><i data-lucide="facebook"></i></a><a aria-label="Twitter" href="#"><i data-lucide="twitter"></i></a><a aria-label="LinkedIn" href="#"><i data-lucide="linkedin"></i></a></div></div>
+        <div><p class="mb-8 text-xs uppercase tracking-[0.15em] text-aurora-gold">The Ship</p><ul class="space-y-4 text-sm text-white/50"><li><a href="#ship">Overview</a></li><li><a href="#ship">Specifications</a></li><li><a href="#suites">Deck Plans</a></li><li><a href="#ship">Crew</a></li></ul></div>
+        <div><p class="mb-8 text-xs uppercase tracking-[0.15em] text-aurora-gold">Voyages</p><ul class="space-y-4 text-sm text-white/50"><li><a href="#destinations">Destinations</a></li><li><a href="#destinations">Itineraries</a></li><li><a href="#suites">Dates & Rates</a></li><li><a href="#contact">Special Offers</a></li></ul></div>
+        <div><p class="mb-8 text-xs uppercase tracking-[0.15em] text-aurora-gold">Experiences</p><ul class="space-y-4 text-sm text-white/50"><li><a href="#experiences">Dining</a></li><li><a href="#experiences">Wellness</a></li><li><a href="#experiences">Excursions</a></li><li><a href="#journal">Entertainment</a></li></ul></div>
+        <div><p class="mb-8 text-xs uppercase tracking-[0.15em] text-aurora-gold">Contact Us</p><address class="not-italic text-sm leading-8 text-white/50">123 Maritime Boulevard, Monaco<br><a href="tel:+37712345678">+377 12345678</a><br><a href="mailto:reservations@auroramaritime.com">reservations@auroramaritime.com</a></address></div>
+      </div>
+      <div class="footer-bottom flex items-center justify-between border-t border-white/5 pt-12 text-xs text-white/30"><p>© 2026 Aurora Maritime. All rights reserved.</p><div class="flex gap-10"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a><a href="#">Cookie Policy</a></div></div>
+    </div>
+  </footer>
+
+  <div id="booking-modal" class="booking-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="booking-modal-title">
+    <div class="booking-modal-backdrop" data-booking-close tabindex="-1"></div>
+    <div class="booking-modal-panel">
+      <header class="booking-modal-header">
+        <h2 id="booking-modal-title" class="font-display text-2xl font-light text-white">Reserve Your Voyage</h2>
+        <button class="booking-modal-close interactive" type="button" data-booking-close aria-label="Close booking">×</button>
+      </header>
+      <div class="booking-modal-body">
+        <iframe id="booking-frame" title="Aurora Maritime booking system" src="about:blank" loading="lazy"></iframe>
+        <div id="booking-status" class="booking-modal-status" hidden>
+          <p class="font-display text-2xl font-light text-white">Opening reservation desk…</p>
+          <p class="max-w-md text-sm leading-relaxed text-white/55">If the booking panel stays blank, run <code>npm run dev</code> in this project folder, then click Reserve Voyage again.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module">
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isCoarse = window.matchMedia('(pointer: coarse)').matches;
+    const bookingModal = document.getElementById('booking-modal');
+    const bookingFrame = document.getElementById('booking-frame');
+    const bookingStatus = document.getElementById('booking-status');
+    let bookingLoadTimer;
+    let cachedBookingHref = '/booking';
+
+    async function resolveBookingHref() {
+      return '/booking';
+    }
+
+    function closeBookingModal() {
+      bookingModal.classList.remove('is-open');
+      bookingModal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      window.clearTimeout(bookingLoadTimer);
+      bookingFrame.src = 'about:blank';
+      bookingStatus.hidden = true;
+    }
+
+    async function openBookingModal(event) {
+      event.preventDefault();
+      const href = await resolveBookingHref();
+      bookingFrame.src = href;
+      bookingStatus.hidden = false;
+      bookingModal.classList.add('is-open');
+      bookingModal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      const mobileMenuEl = document.getElementById('mobile-menu');
+      const menuToggleEl = document.getElementById('menu-toggle');
+      mobileMenuEl?.classList.remove('open');
+      menuToggleEl?.classList.remove('is-open');
+      menuToggleEl?.setAttribute('aria-expanded', 'false');
+      mobileMenuEl?.setAttribute('aria-hidden', 'true');
+      window.clearTimeout(bookingLoadTimer);
+      bookingLoadTimer = window.setTimeout(() => {
+        bookingStatus.hidden = false;
+      }, 2500);
+      bookingFrame.onload = () => {
+        bookingStatus.hidden = true;
+        window.clearTimeout(bookingLoadTimer);
+      };
+    }
+
+    document.querySelectorAll('[data-booking-link]').forEach((link) => {
+      link.addEventListener('click', openBookingModal);
+      resolveBookingHref().then((href) => link.setAttribute('href', href));
+    });
+    document.querySelectorAll('[data-booking-close]').forEach((el) => {
+      el.addEventListener('click', closeBookingModal);
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && bookingModal.classList.contains('is-open')) closeBookingModal();
+    });
+
+    if (window.gsap && window.ScrollTrigger) {
+      gsap.registerPlugin(...[ScrollTrigger, window.ScrollToPlugin, window.MotionPathPlugin, window.ScrollSmoother, window.SplitText, window.DrawSVGPlugin].filter(Boolean));
+    }
+    if (window.Splitting) Splitting();
+
+    // Enhanced preloader sequence.
+    if (window.gsap) {
+      const counter = { value: 0 };
+      const preloadTl = gsap.timeline({
+        defaults: { ease: 'power2.inOut' },
+        onComplete: () => {
+          gsap.to('#preloader', { opacity: 0, scale: 1.05, duration: 0.8, delay: 0.3, onStart: () => document.getElementById('preloader').classList.add('is-hidden') });
+          gsap.fromTo('main, footer, #site-nav', { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 1, ease: 'power3.out' });
+        }
+      });
+      preloadTl.from('#preloader .font-display, #preloader .font-body', { opacity: 0, y: 18, duration: 0.5 })
+        .to('.preloader-fill', { width: '100%', duration: 2 }, 0.35)
+        .to(counter, { value: 100, duration: 2, onUpdate: () => {
+          document.getElementById('preloader-count').textContent = Math.round(counter.value) + '%';
+        } }, 0.35)
+        .to('#preloader .font-display', { scale: 1.2, duration: 0.35 }, '>-0.05');
+    }
+
+    // Cursor
+    if (!isCoarse && !reduceMotion) {
+      const dot = document.querySelector('.cursor-dot');
+      const ring = document.querySelector('.cursor-ring');
+      let mx = innerWidth / 2, my = innerHeight / 2, dx = mx, dy = my, rx = mx, ry = my;
+      document.addEventListener('mousemove', (e) => { mx = e.clientX; my = e.clientY; });
+      document.addEventListener('mousedown', () => ring.classList.add('is-down'));
+      document.addEventListener('mouseup', () => ring.classList.remove('is-down'));
+      document.querySelectorAll('a, .nav-item').forEach((el) => {
+        el.addEventListener('mouseenter', () => ring.classList.add('is-hover'));
+        el.addEventListener('mouseleave', () => ring.classList.remove('is-hover'));
+      });
+      document.querySelectorAll('button, .magnetic-btn').forEach((el) => {
+        el.addEventListener('mouseenter', () => ring.classList.add('is-button'));
+        el.addEventListener('mouseleave', () => ring.classList.remove('is-button'));
+      });
+      document.querySelectorAll('.image-hover').forEach((el) => {
+        el.addEventListener('mouseenter', () => { ring.classList.add('is-image'); ring.querySelector('.cursor-label').textContent = 'VIEW'; });
+        el.addEventListener('mouseleave', () => { ring.classList.remove('is-image'); ring.querySelector('.cursor-label').textContent = ''; });
+      });
+      window.addEventListener('wheel', () => { ring.classList.add('is-drag'); clearTimeout(window.cursorWheel); window.cursorWheel = setTimeout(() => ring.classList.remove('is-drag'), 160); }, { passive: true });
+      (function animateCursor() {
+        dx += (mx - dx) * 0.45; dy += (my - dy) * 0.45;
+        rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
+        dot.style.left = dx + 'px'; dot.style.top = dy + 'px';
+        ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+        requestAnimationFrame(animateCursor);
+      })();
+    }
+
+    // Navigation
+    const nav = document.getElementById('site-nav');
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 100), { passive: true });
+    menuToggle.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('open');
+      menuToggle.classList.toggle('is-open', open);
+      menuToggle.setAttribute('aria-expanded', String(open));
+      mobileMenu.setAttribute('aria-hidden', String(!open));
+    });
+    document.querySelectorAll('.mobile-link').forEach((a) => a.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      menuToggle.classList.remove('is-open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }));
+
+    // Lenis smooth scroll with GSAP ticker integration.
+    if (!reduceMotion && window.Lenis) {
+      const lenis = new Lenis({
+        duration: 1.4,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        direction: 'vertical',
+        gestureDirection: 'vertical',
+        smooth: true,
+        smoothWheel: true,
+        smoothTouch: false,
+        touchMultiplier: 2,
+        infinite: false
+      });
+      lenis.on('scroll', () => window.ScrollTrigger && ScrollTrigger.update());
+      gsap.ticker.add((time) => lenis.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
+    }
+
+    // Award-level motion choreography.
+    if (window.gsap && window.ScrollTrigger) {
+      const heroSplit = window.SplitText ? new SplitText('.hero-headline', { type: 'chars,words' }) : null;
+      if (heroSplit) {
+        gsap.from(heroSplit.chars, { y: 100, opacity: 0, rotation: -5, stagger: 0.08, duration: 1.2, ease: 'power4.out', delay: 0.5 });
+      } else {
+        gsap.from('.hero-headline .char', { y: 100, opacity: 0, rotation: -5, stagger: 0.08, duration: 1.2, ease: 'power4.out', delay: 0.5 });
+      }
+      gsap.from('.hero-subheadline .char', { opacity: 0, y: 70, stagger: 0.04, duration: 1, ease: 'power4.out', delay: 0.85 });
+      gsap.from('.hero-badge, .hero-actions, .hero-content p', { opacity: 0, y: 30, duration: 1, ease: 'power3.out', stagger: 0.14, delay: 1.05 });
+      gsap.from('.scroll-text, .scroll-line', { opacity: 0, duration: 1, delay: 1.8, ease: 'power3.out' });
+      gsap.to('.hero-bg', { yPercent: 30, scale: 1.2, rotation: 2, opacity: 0.3, ease: 'none', scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true } });
+      gsap.to('.hero-content', { yPercent: -20, opacity: 0.3, ease: 'none', scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true } });
+      gsap.to('.hero-ray', { yPercent: -38, xPercent: 12, ease: 'none', scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true } });
+      gsap.to('.scroll-progress-fill', { height: '100%', ease: 'none', scrollTrigger: { trigger: document.body, start: 'top top', end: 'bottom bottom', scrub: true } });
+      gsap.to('body', { backgroundColor: '#111111', scrollTrigger: { trigger: '.ship-section', start: 'top 50%', end: 'bottom 50%', scrub: true } });
+      gsap.to('body', { backgroundColor: '#0a0a0a', scrollTrigger: { trigger: '#experiences', start: 'top 50%', end: 'bottom 50%', scrub: true } });
+
+      gsap.utils.toArray('.split-title').forEach((title) => {
+        gsap.fromTo(title, { clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0% 0 0)', duration: reduceMotion ? 0 : 1.5, ease: 'power3.inOut', scrollTrigger: { trigger: title, start: 'top 80%' } });
+      });
+      gsap.utils.toArray('.reveal').forEach((el) => gsap.to(el, { opacity: 1, y: 0, duration: reduceMotion ? 0 : 1.1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 85%', once: true } }));
+      gsap.utils.toArray('.reveal-img').forEach((el) => gsap.to(el, { opacity: 1, scale: 1, duration: reduceMotion ? 0 : 1.25, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 85%', once: true } }));
+      gsap.utils.toArray('.reveal-image').forEach((img) => {
+        gsap.to(img, { clipPath: 'inset(0% 0 0 0)', scale: 1, duration: reduceMotion ? 0 : 1.2, ease: 'power3.out', scrollTrigger: { trigger: img, start: 'top 80%', toggleActions: 'play none none reverse' } });
+      });
+      gsap.from('.ship-main-image', { scale: 1.3, ease: 'none', scrollTrigger: { trigger: '.ship-section', start: 'top 80%', end: 'bottom 20%', scrub: 1 } });
+      gsap.to('.ship-secondary-image', { y: -100, rotation: 5, ease: 'none', scrollTrigger: { trigger: '.ship-section', start: 'top bottom', end: 'bottom top', scrub: true } });
+      gsap.utils.toArray('.parallax-img').forEach((img) => gsap.to(img, { yPercent: -12, ease: 'none', scrollTrigger: { trigger: img, start: 'top bottom', end: 'bottom top', scrub: true } }));
+      const horizontalContainer = document.querySelector('.experiences-container');
+      const horizontalCards = gsap.utils.toArray('.experience-card');
+      if (isCoarse || innerWidth <= 767 || !horizontalContainer) {
+        horizontalCards.forEach((card, i) => {
+          gsap.fromTo(card,
+            { opacity: 0, y: 40, x: i % 2 ? 32 : -32 },
+            {
+              opacity: 1,
+              y: 0,
+              x: 0,
+              duration: reduceMotion ? 0 : 0.9,
+              ease: 'power3.out',
+              scrollTrigger: { trigger: card, start: 'top 82%', once: true }
+            }
+          );
+        });
+      }
+    }
+
+    // Magnetic buttons, tilt images, and nav scramble are intentionally disabled on touch.
+    if (!isCoarse && !reduceMotion && window.gsap) {
+      document.querySelectorAll('.magnetic-btn').forEach((btn) => {
+        const inner = btn.querySelector('span') || btn;
+        btn.addEventListener('mousemove', (e) => {
+          const rect = btn.getBoundingClientRect();
+          const x = e.clientX - rect.left - rect.width / 2;
+          const y = e.clientY - rect.top - rect.height / 2;
+          gsap.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: 'power2.out' });
+          gsap.to(inner, { x: x * -0.15, y: y * -0.15, duration: 0.3, ease: 'power2.out' });
+        });
+        btn.addEventListener('mouseleave', () => {
+          gsap.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.3)' });
+          gsap.to(inner, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1, 0.3)' });
+        });
+      });
+
+      document.querySelectorAll('.tilt-image').forEach((img) => {
+        img.addEventListener('mousemove', (e) => {
+          const rect = img.getBoundingClientRect();
+          const rotateX = ((e.clientY - rect.top) - rect.height / 2) / (rect.height / 2) * -5;
+          const rotateY = ((e.clientX - rect.left) - rect.width / 2) / (rect.width / 2) * 5;
+          gsap.to(img, { rotateX, rotateY, duration: 0.3, ease: 'power2.out' });
+        });
+        img.addEventListener('mouseleave', () => gsap.to(img, { rotateX: 0, rotateY: 0, duration: 0.5, ease: 'elastic.out(1, 0.5)' }));
+      });
+
+      const chars = 'AURORA0123456789/\\_';
+      document.querySelectorAll('.nav-item').forEach((item) => {
+        const original = item.textContent;
+        item.addEventListener('mouseenter', () => {
+          let frame = 0;
+          clearInterval(item._scramble);
+          item._scramble = setInterval(() => {
+            item.textContent = original.split('').map((ch, i) => i < frame ? original[i] : chars[Math.floor(Math.random() * chars.length)]).join('');
+            frame += 1;
+            if (frame > original.length) { clearInterval(item._scramble); item.textContent = original; }
+          }, 28);
+        });
+        item.addEventListener('mouseleave', () => { clearInterval(item._scramble); item.textContent = original; });
+      });
+    }
+
+    // Sticky pinned horizontal experiences scroll.
+    // Shows exactly 3 cards per row and releases as soon as the final 3+3 set is reached.
+    if (!isCoarse && innerWidth > 767) {
+      const section = document.querySelector('.experiences-scroll');
+      const stage = document.querySelector('.experiences-stage');
+      const track = document.querySelector('.experiences-container');
+      let maxX = 0;
+      let scrollDistance = 0;
+      let currentX = 0;
+      let targetX = 0;
+      let ticking = false;
+
+      const measureHorizontal = () => {
+        if (!section || !stage || !track) return;
+        const rows = [...track.querySelectorAll('.experience-row')];
+        const widestRow = Math.max(0, ...rows.map((row) => row.scrollWidth));
+        maxX = Math.max(0, widestRow - stage.clientWidth);
+        scrollDistance = Math.max(window.innerHeight * 0.72, maxX * 0.72);
+        section.style.height = `${Math.round(window.innerHeight + scrollDistance)}px`;
+        updateHorizontal(true);
+      };
+
+      const updateHorizontal = (immediate = false) => {
+        ticking = false;
+        if (!section || !track || maxX <= 0) return;
+        const start = section.offsetTop;
+        const end = start + scrollDistance;
+        const raw = (window.scrollY - start) / Math.max(1, end - start);
+        const progress = Math.min(1, Math.max(0, raw));
+        targetX = -maxX * progress;
+        currentX = immediate ? targetX : currentX + (targetX - currentX) * 0.18;
+        if (Math.abs(targetX - currentX) < 0.2) currentX = targetX;
+        track.style.transform = `translate3d(${currentX}px,0,0)`;
+        if (!immediate && currentX !== targetX) requestAnimationFrame(() => updateHorizontal(false));
+      };
+
+      const requestHorizontalUpdate = () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => updateHorizontal(false));
+      };
+
+      window.addEventListener('scroll', requestHorizontalUpdate, { passive: true });
+      window.addEventListener('resize', measureHorizontal);
+      window.addEventListener('load', measureHorizontal);
+      measureHorizontal();
+    }
+
+    // WebGL hero background
+    try {
+      const THREE = await import('three');
+      const host = document.getElementById('hero-webgl');
+      const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: false, powerPreference: 'high-performance' });
+      renderer.setSize(innerWidth, innerHeight);
+      renderer.setPixelRatio(Math.min(devicePixelRatio, isCoarse ? 1 : 1.5));
+      host.appendChild(renderer.domElement);
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(70, innerWidth / innerHeight, 0.1, 100);
+      camera.position.z = 14;
+      const count = isCoarse ? 900 : 2000;
+      const pos = new Float32Array(count * 3);
+      const col = new Float32Array(count * 3);
+      const c1 = new THREE.Color(0x1e3a5f);
+      const c2 = new THREE.Color(0x2e5a8f);
+      for (let i = 0; i < count; i++) {
+        const r = 5 + Math.random() * 7;
+        const a = Math.random() * Math.PI * 2;
+        const b = Math.acos(2 * Math.random() - 1);
+        pos[i * 3] = r * Math.sin(b) * Math.cos(a);
+        pos[i * 3 + 1] = r * Math.sin(b) * Math.sin(a);
+        pos[i * 3 + 2] = r * Math.cos(b);
+        const cc = c1.clone().lerp(c2, Math.random());
+        col[i * 3] = cc.r; col[i * 3 + 1] = cc.g; col[i * 3 + 2] = cc.b;
+      }
+      const geometry = new THREE.BufferGeometry();
+      geometry.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      geometry.setAttribute('color', new THREE.BufferAttribute(col, 3));
+      const points = new THREE.Points(geometry, new THREE.PointsMaterial({ size: 0.028, transparent: true, opacity: 0.6, vertexColors: true, blending: THREE.AdditiveBlending, depthWrite: false }));
+      scene.add(points);
+      let mouseX = 0, mouseY = 0;
+      document.addEventListener('mousemove', (e) => { mouseX = (e.clientX / innerWidth - 0.5) * 0.8; mouseY = (e.clientY / innerHeight - 0.5) * 0.8; });
+      const base = pos.slice();
+      let time = 0;
+      function renderWebGL() {
+        requestAnimationFrame(renderWebGL);
+        time += 0.01;
+        if (!reduceMotion) {
+          points.rotation.y += 0.001;
+          points.rotation.x += 0.0004;
+          points.rotation.y += (mouseX - points.rotation.y * 0.04) * 0.002;
+          const arr = geometry.attributes.position.array;
+          for (let i = 1; i < arr.length; i += 3) arr[i] = base[i] + Math.sin(time + base[i - 1] * 0.6) * 0.18 + mouseY * 0.25;
+          geometry.attributes.position.needsUpdate = true;
+        }
+        renderer.render(scene, camera);
+      }
+      renderWebGL();
+      addEventListener('resize', () => {
+        camera.aspect = innerWidth / innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(innerWidth, innerHeight);
+      });
+    } catch (err) {
+      console.warn(err);
+    }
+
+    // Interactive receipts
+    document.getElementById('film-btn').addEventListener('click', () => alert('Film request received. A private screening link will be sent by your voyage designer.'));
+    document.getElementById('brochure-btn').addEventListener('click', () => alert('Aurora Maritime brochure prepared for download.'));
+    window.lucide?.createIcons();
+  </script>
+</body>
+</html>

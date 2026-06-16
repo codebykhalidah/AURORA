@@ -1,0 +1,161 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum RoomType {
+  INTERIOR
+  OCEAN_VIEW
+  SUITE
+}
+
+enum TicketTypeName {
+  ADULT
+  CHILD
+  SENIOR
+}
+
+enum BookingStatus {
+  PENDING_HOLD
+  CONFIRMED
+  CANCELLED
+  EXPIRED
+}
+
+model Cruise {
+  id             String           @id @default(cuid())
+  name           String
+  description    String
+  base_price     Decimal          @db.Decimal(10, 2)
+  departure_port String
+  arrival_port   String
+  schedules      CruiseSchedule[]
+  rooms          Room[]
+  created_at     DateTime         @default(now())
+  updated_at     DateTime         @updatedAt
+
+  @@index([departure_port, arrival_port])
+}
+
+model CruiseSchedule {
+  id             String    @id @default(cuid())
+  cruiseId       String
+  cruise         Cruise    @relation(fields: [cruiseId], references: [id], onDelete: Cascade)
+  departure_time DateTime
+  arrival_time   DateTime
+  date           DateTime
+  is_active      Boolean   @default(true)
+  bookings       Booking[]
+
+  @@index([cruiseId, date, is_active])
+  @@index([departure_time, arrival_time])
+}
+
+model Room {
+  id               String        @id @default(cuid())
+  cruiseId         String
+  cruise           Cruise        @relation(fields: [cruiseId], references: [id], onDelete: Cascade)
+  room_number      String
+  room_type        RoomType
+  price_multiplier Float
+  capacity         Int
+  is_active        Boolean       @default(true)
+  bookingRooms     BookingRoom[]
+  locks            RoomLock[]
+  passengers       Passenger[]
+
+  @@unique([cruiseId, room_number])
+  @@index([cruiseId, room_type, is_active])
+}
+
+model TicketType {
+  id             String         @id @default(cuid())
+  name           TicketTypeName  @unique
+  base_price     Decimal        @db.Decimal(10, 2)
+  bookingTickets BookingTicket[]
+
+  @@index([name])
+}
+
+model Booking {
+  id               String          @id @default(cuid())
+  userId           String?
+  scheduleId       String
+  schedule         CruiseSchedule  @relation(fields: [scheduleId], references: [id], onDelete: Restrict)
+  status           BookingStatus   @default(PENDING_HOLD)
+  total_amount     Decimal         @db.Decimal(10, 2)
+  currency         String          @default("USD")
+  hold_expires_at  DateTime?
+  idempotency_key  String?         @unique
+  created_at       DateTime        @default(now())
+  updated_at       DateTime        @updatedAt
+  rooms            BookingRoom[]
+  tickets          BookingTicket[]
+  passengers       Passenger[]
+  roomLocks        RoomLock[]
+
+  @@index([scheduleId, status, hold_expires_at])
+  @@index([userId])
+}
+
+model BookingRoom {
+  id               String   @id @default(cuid())
+  bookingId        String
+  booking          Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  roomId           String
+  room             Room     @relation(fields: [roomId], references: [id], onDelete: Restrict)
+  scheduleId       String
+  price_at_booking Decimal  @db.Decimal(10, 2)
+
+  @@unique([bookingId, roomId])
+  @@index([scheduleId, roomId])
+  @@index([roomId])
+}
+
+model RoomLock {
+  id         String   @id @default(cuid())
+  scheduleId String
+  roomId     String
+  room       Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  bookingId  String   @unique
+  booking    Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  expires_at DateTime?
+  created_at DateTime @default(now())
+
+  // Critical DB-level guard: only one active lock row can exist per room/schedule.
+  // Expired holds are freed by deleting lock rows in /api/cron/cleanup-holds.
+  @@unique([scheduleId, roomId])
+  @@index([expires_at])
+}
+
+model BookingTicket {
+  id               String     @id @default(cuid())
+  bookingId        String
+  booking          Booking    @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  ticketTypeId     String
+  ticketType       TicketType @relation(fields: [ticketTypeId], references: [id], onDelete: Restrict)
+  quantity         Int
+  price_at_booking Decimal    @db.Decimal(10, 2)
+
+  @@unique([bookingId, ticketTypeId])
+}
+
+model Passenger {
+  id            String         @id @default(cuid())
+  bookingId     String
+  booking       Booking        @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  roomId        String?
+  room          Room?          @relation(fields: [roomId], references: [id], onDelete: SetNull)
+  first_name    String
+  last_name     String
+  date_of_birth DateTime
+  ticket_type   TicketTypeName
+
+  @@index([bookingId])
+  @@index([roomId])
+}

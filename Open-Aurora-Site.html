@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aurora Maritime</title>
+  <script>
+    (async function () {
+      const ports = [3000, 3001, 3002];
+      for (const port of ports) {
+        try {
+          await fetch('http://localhost:' + port + '/marketing.html', { mode: 'no-cors' });
+          location.replace('http://localhost:' + port + '/marketing.html');
+          return;
+        } catch (_) {}
+      }
+      document.title = 'Aurora — start server';
+      document.body.innerHTML =
+        '<p style="font-family:system-ui,sans-serif;padding:2rem;color:#fff;background:#0a0a0a;min-height:100vh;margin:0">' +
+        'Start the dev server first: open the AURORA folder in a terminal and run <code style="color:#c9a96e">npm run dev</code>, then open this file again.' +
+        '</p>';
+    })();
+  </script>
+</head>
+<body></body>
+</html>
