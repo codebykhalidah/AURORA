@@ -113,8 +113,9 @@
     .cursor-ring.is-drag { transform: translate(-50%, -50%) scale(1.2); border-color: var(--gold); animation: cursor-spin 1.2s linear infinite; }
     @keyframes cursor-spin { to { rotate: 360deg; } }
     #page-transition { position: fixed; inset: 0; z-index: 9998; background: var(--black); transform: translateY(100%); pointer-events: none; }
-    #site-nav { position: fixed; inset: 0 0 auto 0; height: 100px; z-index: 100; transition: all 0.4s var(--ease); }
+    #site-nav { position: fixed; inset: 0 0 auto 0; height: 100px; z-index: 200; transition: all 0.4s var(--ease); }
     #site-nav.scrolled { height: 80px; background: rgba(10,10,10,0.95); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+    #site-nav .container-xl { position: relative; z-index: 2; }
     .nav-item { position: relative; padding: 0.5rem 0; color: rgba(255,255,255,0.6); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; transition: color 0.3s; }
     .nav-item::after { content: ""; position: absolute; left: 50%; bottom: 0; width: 0; height: 1px; background: var(--gold); transform: translateX(-50%); transition: width 0.4s var(--ease); }
     .nav-item:hover { color: #fff; }
@@ -127,6 +128,7 @@
     .btn-outline { padding: 1.25rem 2.5rem; border: 1px solid rgba(255,255,255,0.2); color: #fff; display: inline-flex; align-items: center; gap: 0.75rem; }
     .btn-outline:hover { border-color: #fff; transform: translateY(-3px); }
     .hamburger span { display: block; width: 24px; height: 1px; background: #fff; margin: 6px 0; transition: transform 0.35s var(--ease), opacity 0.35s; }
+    .hamburger { position: relative; z-index: 3; flex-shrink: 0; min-width: 44px; min-height: 44px; padding: 10px; margin: -10px -10px -10px 0; background: transparent; border: 0; }
     .hamburger.is-open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .hamburger.is-open span:nth-child(2) { opacity: 0; }
     .hamburger.is-open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
@@ -190,17 +192,68 @@
       .desktop-nav, .desktop-cta { display: none; }
     }
     @media (max-width: 767px) {
-      .container-xl { padding: 0 24px; }
+      .container-xl { padding: 0 20px; }
       .section-pad { padding: 100px 0; }
-      .hero-title { font-size: 3.5rem !important; }
-      .section-title { font-size: 2.5rem; }
+      #site-nav {
+        height: 72px;
+        background: rgba(10,10,10,0.92);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-bottom: 1px solid rgba(255,255,255,0.06);
+        padding-top: env(safe-area-inset-top, 0px);
+      }
+      #site-nav.scrolled { height: 64px; }
+      #site-nav .container-xl > a:first-child {
+        font-size: 1.35rem !important;
+        letter-spacing: 0.08em;
+        flex-shrink: 0;
+        position: relative;
+        z-index: 3;
+      }
+      #hero {
+        height: auto !important;
+        min-height: 100svh;
+        min-height: 100dvh;
+        padding-top: calc(72px + env(safe-area-inset-top, 0px));
+        box-sizing: border-box;
+      }
+      .hero-content {
+        height: auto;
+        min-height: calc(100svh - 72px - env(safe-area-inset-top, 0px));
+        min-height: calc(100dvh - 72px - env(safe-area-inset-top, 0px));
+        justify-content: center;
+        padding-top: 1.25rem;
+        padding-bottom: 5.5rem;
+      }
+      .hero-badge {
+        max-width: calc(100vw - 40px);
+        margin-bottom: 1.75rem;
+        padding: 0.55rem 0.9rem;
+        font-size: 0.58rem;
+        letter-spacing: 0.12em;
+        line-height: 1.35;
+        text-align: left;
+        flex-wrap: wrap;
+        align-self: flex-start;
+      }
+      .hero-badge span.rounded-full { flex-shrink: 0; }
+      .hero-badge-text { display: block; }
+      .hero-title { font-size: clamp(2.5rem, 11vw, 3.5rem) !important; line-height: 1.05 !important; }
+      .hero-subheadline { margin-bottom: 1.5rem !important; }
+      .hero-content > p { font-size: 1rem; line-height: 1.7; margin-bottom: 2rem !important; }
+      .section-title { font-size: 2.25rem; }
       .subsection-title { font-size: 1.75rem !important; }
       .mobile-stack { grid-template-columns: 1fr !important; text-align: center; gap: 3rem !important; }
-      .hero-actions, .cta-actions { flex-direction: column; align-items: stretch; }
-      .hero-actions a, .cta-actions button { width: 100%; justify-content: center; text-align: center; }
+      .hero-actions, .cta-actions { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+      .hero-actions a, .cta-actions button, .hero-actions button { width: 100%; justify-content: center; text-align: center; }
+      .btn-primary, .btn-outline { padding: 1rem 1.5rem; }
       .experience-card { min-width: 82vw; }
       .footer-grid { grid-template-columns: 1fr !important; gap: 3rem !important; }
       .footer-bottom { flex-direction: column; gap: 1.5rem; text-align: center; }
+      .scroll-progress { display: none; }
+      .marquee-content { font-size: 2rem; }
+      #mobile-menu { padding: env(safe-area-inset-top, 0px) 1.5rem env(safe-area-inset-bottom, 0px); }
+      .mobile-link { font-size: clamp(2rem, 8vw, 3rem) !important; }
     }
     @media (pointer: coarse), (prefers-reduced-motion: reduce) {
       .cursor-dot, .cursor-ring { display: none; }
@@ -275,7 +328,7 @@
       <div class="hero-ray hero-depth-2" aria-hidden="true"></div>
       <div id="hero-webgl" aria-hidden="true"></div>
       <div class="hero-content hero-depth-3 container-xl">
-        <div class="hero-badge hero-anim"><span class="h-1.5 w-1.5 rounded-full bg-aurora-gold"></span>Now booking 2025-2026 voyages</div>
+        <div class="hero-badge hero-anim"><span class="h-1.5 w-1.5 shrink-0 rounded-full bg-aurora-gold"></span><span class="hero-badge-text">Now booking 2025-2026 voyages</span></div>
         <h1 class="hero-title hero-headline hero-anim font-display text-[7rem] font-light leading-none tracking-[0.05em] text-white" data-splitting>AURORA</h1>
         <div class="hero-title hero-subheadline hero-anim mb-12 font-display text-[7rem] font-light leading-none tracking-[0.15em] text-white/40" data-splitting>MARITIME</div>
         <p class="hero-anim mb-16 max-w-[600px] text-lg leading-[1.8] text-white/60">An intimate luxury cruise experience for discerning travelers. Accommodating only 50 guests across 25 suites, Aurora offers unparalleled access to the world's most exclusive destinations.</p>
