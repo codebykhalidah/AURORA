@@ -23,9 +23,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js"></script>
-  <script src="https://assets.codepen.io/16327/ScrollSmoother.min.js"></script>
-  <script src="https://assets.codepen.io/16327/SplitText3.min.js"></script>
-  <script src="https://assets.codepen.io/16327/DrawSVGPlugin3.min.js"></script>
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <link rel="stylesheet" href="https://unpkg.com/splitting/dist/splitting.css">
@@ -505,7 +502,7 @@
     });
 
     if (window.gsap && window.ScrollTrigger) {
-      gsap.registerPlugin(...[ScrollTrigger, window.ScrollToPlugin, window.MotionPathPlugin, window.ScrollSmoother, window.SplitText, window.DrawSVGPlugin].filter(Boolean));
+      gsap.registerPlugin(ScrollTrigger, ScrollToPlugin, MotionPathPlugin);
     }
     if (window.Splitting) Splitting();
 
@@ -594,12 +591,7 @@
 
     // Award-level motion choreography.
     if (window.gsap && window.ScrollTrigger) {
-      const heroSplit = window.SplitText ? new SplitText('.hero-headline', { type: 'chars,words' }) : null;
-      if (heroSplit) {
-        gsap.from(heroSplit.chars, { y: 100, opacity: 0, rotation: -5, stagger: 0.08, duration: 1.2, ease: 'power4.out', delay: 0.5 });
-      } else {
-        gsap.from('.hero-headline .char', { y: 100, opacity: 0, rotation: -5, stagger: 0.08, duration: 1.2, ease: 'power4.out', delay: 0.5 });
-      }
+      gsap.from('.hero-headline .char', { y: 100, opacity: 0, rotation: -5, stagger: 0.08, duration: 1.2, ease: 'power4.out', delay: 0.5 });
       gsap.from('.hero-subheadline .char', { opacity: 0, y: 70, stagger: 0.04, duration: 1, ease: 'power4.out', delay: 0.85 });
       gsap.from('.hero-badge, .hero-actions, .hero-content p', { opacity: 0, y: 30, duration: 1, ease: 'power3.out', stagger: 0.14, delay: 1.05 });
       gsap.from('.scroll-text, .scroll-line', { opacity: 0, duration: 1, delay: 1.8, ease: 'power3.out' });
